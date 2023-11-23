@@ -213,3 +213,41 @@ func mergeKListsV2(lists []*ListNode) *ListNode {
 
 	return nil
 }
+
+// 24. Swap Nodes in Pairs
+// https://leetcode.com/problems/swap-nodes-in-pairs/
+// 解法1：迭代法
+// 这里应该如何想呢？我需要交换两个节点，那么一定会设计到3个节点；
+// 将这个三个节点为一个整天，那么，我们首先要断链，将这个整体最后一个节点的next保存起来；
+// 接着处理每一个元素，比如这里，我们先处理pre，在处理最后一个，继续处理，直到把所有元素处理完；
+// 处理完这个整体之后，处理下一个整体；
+func swapPairs(head *ListNode) *ListNode {
+	// 建立哨兵节点
+	dummy := &ListNode{Next: head}
+	pre, cur := dummy, head
+
+	// 现在是两两交换，因此设计到3个节点，我们将3个节点作为一个整体，每次处理3个节点
+	for cur != nil && cur.Next != nil {
+		// 断链以及一些初始化操作
+		end := cur.Next.Next
+		first := cur
+		second := cur.Next
+
+		// 处理交换的流程
+		pre.Next = second
+		second.Next = first
+		first.Next = end
+
+		// 处理下一个整体
+		pre = first
+		cur = first.Next
+	}
+
+	return dummy.Next
+}
+
+func Test_SwapPairs(t *testing.T) {
+	list := CreateListBySlice([]int{1, 2, 3, 4, 5})
+	res := swapPairs(list)
+	PrintlnList(res)
+}
