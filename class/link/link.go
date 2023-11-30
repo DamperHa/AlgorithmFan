@@ -40,3 +40,11 @@ func PrintlnList(l *ListNode) {
 
 	fmt.Println()
 }
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
